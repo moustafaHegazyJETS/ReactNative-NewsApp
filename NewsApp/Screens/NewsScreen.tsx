@@ -1,10 +1,9 @@
 import {
-  Text,
-  Button,
   View,
   StyleSheet,
   FlatList,
-  TextInput
+  TextInput,
+  ActivityIndicator
 } from "react-native";
 import { useEffect, useContext, useState } from "react";
 import { getNews } from "../Network/http";
@@ -15,9 +14,11 @@ import { GlobalStyles } from "../utls/Colors";
 export function NewsScreen({ navigation }) {
   // constants
   var isLoading: boolean = true;
+
   const newsContext = useContext(NewsContext);
 
   // hooks
+  const [refreshing, setRefreshing] = useState(true);
   const [news, addNews] = useState<NewsModel[]>();
   const [inputText, onChangeText] = useState("");
 
@@ -25,19 +26,25 @@ export function NewsScreen({ navigation }) {
 
   // for retriving data
   useEffect(() => {
-    async function fetchNews() {
-      const newNews = await getNews();
-      newsContext.setNews(newNews);
-      addNews(newNews);
-    }
     // if is loading in first time to get data once and to refresh if pull to refresh
-    if (isLoading) {
+    if (refreshing) {
       fetchNews();
-      isLoading = false;
     }
-  }, [isLoading, getNews]);
+  }, [getNews, addNews]);
 
   // functions
+  async function fetchNews() {
+    addNews([]);
+    const newNews = await getNews();
+    newsContext.setNews(newNews);
+    addNews(newNews);
+    setRefreshing(false);
+  }
+
+  function onRefresh() {
+    setRefreshing(true);
+    fetchNews();
+  }
   // return
   return (
     <View style={style.mainScreenView}>
@@ -46,6 +53,8 @@ export function NewsScreen({ navigation }) {
         onChangeText={onChangeText}
         placeholder="Search News..."
       />
+      {/* update this with refreshing and fetching data screen  */}
+      {refreshing ? <ActivityIndicator /> : null}
       <FlatList
         data={news}
         renderItem={itemData => {
@@ -57,6 +66,9 @@ export function NewsScreen({ navigation }) {
             return <NewsItem newsObj={itemData.item} />;
           }
         }}
+        keyExtractor={(item, index) => index.toString()}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
       />
     </View>
   );

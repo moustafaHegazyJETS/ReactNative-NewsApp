@@ -15,10 +15,7 @@ export function NewsDetailsScreen({ route }) {
   return (
     <ScrollView style={styles.mainScreenView}>
       <Text style={styles.headerText}>{newsObj.title}</Text>
-      <Image
-        source={{ uri: newsObj.urlToImage, cache: "only-if-cached" }}
-        style={styles.imageItem}
-      />
+      <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
       <View style={styles.authorContainer}>
         <Text style={styles.authorItem}>Author: {newsObj.author}</Text>
         <Text style={styles.dateItem}>Release Date: {releaseDate}</Text>
