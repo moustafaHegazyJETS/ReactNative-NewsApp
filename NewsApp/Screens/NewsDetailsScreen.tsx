@@ -4,27 +4,69 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  Linking
+  Linking,
+  useColorScheme
 } from "react-native";
 import { GlobalStyles } from "../utls/Colors";
 
 export function NewsDetailsScreen({ route }) {
   const newsObj: NewsModel = route.params.selectedNewsObject;
   const releaseDate = newsObj.publishedAt.slice(0, 10);
+  const theme = useColorScheme();
+  const themedColors =
+    theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
 
   return (
-    <ScrollView style={styles.mainScreenView}>
-      <Text style={styles.headerText}>{newsObj.title}</Text>
+    <ScrollView
+      style={[
+        styles.mainScreenView,
+        { backgroundColor: themedColors.background }
+      ]}
+    >
+      <Text
+        style={[
+          styles.headerText,
+          {
+            color: themedColors.textColor
+          }
+        ]}
+      >
+        {newsObj.title}
+      </Text>
       <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
       <View style={styles.authorContainer}>
-        <Text style={styles.authorItem}>Author: {newsObj.author}</Text>
-        <Text style={styles.dateItem}>Release Date: {releaseDate}</Text>
+        <Text
+          style={[
+            styles.authorItem,
+            {
+              color: themedColors.textDetailsColor
+            }
+          ]}
+        >
+          Author: {newsObj.author}
+        </Text>
+        <Text
+          style={{
+            color: themedColors.textDetailsColor
+          }}
+        >
+          Release Date: {releaseDate}
+        </Text>
       </View>
       <View style={styles.articleLink}>
-        <Text style={styles.descText}>{newsObj.content}</Text>
+        <Text
+          style={[
+            styles.descText,
+            {
+              color: themedColors.textColor
+            }
+          ]}
+        >
+          {newsObj.content}
+        </Text>
 
         <Text
-          style={styles.linkText}
+          style={[styles.linkText, { color: themedColors.textLinkColor }]}
           onPress={() => Linking.openURL(newsObj.url)}
         >
           Click Here To check full Article
@@ -37,11 +79,9 @@ export function NewsDetailsScreen({ route }) {
 const styles = StyleSheet.create({
   mainScreenView: {
     flex: 1,
-    backgroundColor: GlobalStyles.colors.primary200,
     padding: 10
   },
   headerText: {
-    color: "white",
     marginTop: 20,
     marginBottom: 20,
     textAlign: "center",
@@ -61,25 +101,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   authorItem: {
-    color: "white",
     marginBottom: 10
   },
-  dateItem: {
-    color: "white"
-  },
   articleLink: {
-    alignSelf: "center"
+    alignSelf: "center",
+    marginBottom: 50
   },
   descText: {
-    fontSize: 19,
+    fontSize: 30,
     fontWeight: "bold",
-    padding: 10,
-    color: "white"
+    padding: 10
   },
   linkText: {
     fontSize: 22,
     fontWeight: "bold",
-    alignSelf: "center",
-    color: GlobalStyles.colors.primary500
+    alignSelf: "center"
   }
 });

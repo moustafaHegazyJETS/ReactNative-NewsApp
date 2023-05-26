@@ -3,30 +3,29 @@ import {
   StyleSheet,
   FlatList,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
+  useColorScheme
 } from "react-native";
 import { useEffect, useContext, useState } from "react";
 import { getNews } from "../Network/http";
 import { NewsContext } from "../store/News-context";
 import { NewsItem } from "../components/NewsItem";
 import { GlobalStyles } from "../utls/Colors";
+import { useTheme } from "@react-navigation/native";
 
-export function NewsScreen({ navigation }) {
+export function NewsScreen() {
   // constants
-  var isLoading: boolean = true;
-
   const newsContext = useContext(NewsContext);
+  const theme = useColorScheme();
+  const themedColors =
+    theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
 
   // hooks
   const [refreshing, setRefreshing] = useState(true);
   const [news, addNews] = useState<NewsModel[]>();
   const [inputText, onChangeText] = useState("");
 
-  // for updating data
-
-  // for retriving data
   useEffect(() => {
-    // if is loading in first time to get data once and to refresh if pull to refresh
     if (refreshing) {
       fetchNews();
     }
@@ -47,9 +46,20 @@ export function NewsScreen({ navigation }) {
   }
   // return
   return (
-    <View style={style.mainScreenView}>
+    <View
+      style={[
+        style.mainScreenView,
+        { backgroundColor: themedColors.background }
+      ]}
+    >
       <TextInput
-        style={style.inputText}
+        style={[
+          style.inputText,
+          {
+            borderColor: themedColors.boarder,
+            backgroundColor: themedColors.searchBarBackground
+          }
+        ]}
         onChangeText={onChangeText}
         placeholder="Search News..."
       />
@@ -75,19 +85,14 @@ export function NewsScreen({ navigation }) {
 }
 
 const style = StyleSheet.create({
-  mainText: {
-    color: "red"
-  },
   mainScreenView: {
-    flex: 1,
-    margin: 10
+    flex: 1
   },
   inputText: {
     height: 40,
     padding: 10,
     margin: 10,
     borderRadius: 6,
-    borderWidth: 2,
-    borderColor: GlobalStyles.colors.primary50
+    borderWidth: 2
   }
 });

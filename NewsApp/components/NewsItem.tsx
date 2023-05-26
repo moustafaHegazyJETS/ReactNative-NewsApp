@@ -1,9 +1,19 @@
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Pressable,
+  useColorScheme
+} from "react-native";
 import { GlobalStyles } from "../utls/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 export function NewsItem({ newsObj }: NewsObject) {
   const navigationHook = useNavigation();
+  const theme = useColorScheme();
+  const themedColors =
+    theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
 
   function navigateToDetailsScreen() {
     navigationHook.navigate("NewsDetailsScreen", {
@@ -12,8 +22,22 @@ export function NewsItem({ newsObj }: NewsObject) {
   }
   return (
     <Pressable onPress={navigateToDetailsScreen}>
-      <View style={styles.mainContainer}>
-        <Text style={styles.textItem}>{newsObj.title}</Text>
+      <View
+        style={[
+          styles.mainContainer,
+          { backgroundColor: themedColors.itemBackground }
+        ]}
+      >
+        <Text
+          style={[
+            styles.textItem,
+            {
+              color: themedColors.itemTextcolor
+            }
+          ]}
+        >
+          {newsObj.title}
+        </Text>
         <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
       </View>
     </Pressable>
@@ -25,13 +49,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
     borderRadius: 6,
-    margin: 10,
-    backgroundColor: GlobalStyles.colors.primary100
+    margin: 10
   },
   textItem: {
     flex: 1,
     margin: 20,
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: 20
   },
   imageItem: {
     width: "100%",
