@@ -10,6 +10,7 @@ import { useEffect, useContext, useState } from "react";
 import { getNews } from "../Network/http";
 import { NewsContext } from "../store/News-context";
 import { NewsItem } from "../components/NewsItem";
+import { GlobalStyles } from "../utls/Colors";
 
 export function NewsScreen({ navigation }) {
   // constants
@@ -20,6 +21,9 @@ export function NewsScreen({ navigation }) {
   const [news, addNews] = useState<NewsModel[]>();
   const [inputText, onChangeText] = useState("");
 
+  // for updating data
+
+  // for retriving data
   useEffect(() => {
     async function fetchNews() {
       const newNews = await getNews();
@@ -38,14 +42,20 @@ export function NewsScreen({ navigation }) {
   return (
     <View style={style.mainScreenView}>
       <TextInput
+        style={style.inputText}
         onChangeText={onChangeText}
         placeholder="Search News..."
-        keyboardType="numeric"
       />
       <FlatList
         data={news}
         renderItem={itemData => {
-          return <NewsItem newsObj={itemData.item} />;
+          if (inputText === "") {
+            return <NewsItem newsObj={itemData.item} />;
+          } else if (
+            itemData.item.title.toLowerCase().includes(inputText.toLowerCase())
+          ) {
+            return <NewsItem newsObj={itemData.item} />;
+          }
         }}
       />
     </View>
@@ -59,5 +69,13 @@ const style = StyleSheet.create({
   mainScreenView: {
     flex: 1,
     margin: 10
+  },
+  inputText: {
+    height: 40,
+    padding: 10,
+    margin: 10,
+    borderRadius: 6,
+    borderWidth: 2,
+    borderColor: GlobalStyles.colors.primary50
   }
 });

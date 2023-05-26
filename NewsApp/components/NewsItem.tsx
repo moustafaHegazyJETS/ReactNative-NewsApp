@@ -14,10 +14,7 @@ export function NewsItem({ newsObj }: NewsObject) {
     <Pressable onPress={navigateToDetailsScreen}>
       <View style={styles.mainContainer}>
         <Text style={styles.textItem}>{newsObj.title}</Text>
-        <Image
-          source={{ uri: newsObj.urlToImage, cache: "only-if-cached" }}
-          style={styles.imageItem}
-        />
+        <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
       </View>
     </Pressable>
   );
