@@ -1,4 +1,11 @@
-import { Text, Button, View, StyleSheet, FlatList } from "react-native";
+import {
+  Text,
+  Button,
+  View,
+  StyleSheet,
+  FlatList,
+  TextInput
+} from "react-native";
 import { useEffect, useContext, useState } from "react";
 import { getNews } from "../Network/http";
 import { NewsContext } from "../store/News-context";
@@ -11,6 +18,7 @@ export function NewsScreen({ navigation }) {
 
   // hooks
   const [news, addNews] = useState<NewsModel[]>();
+  const [inputText, onChangeText] = useState("");
 
   useEffect(() => {
     async function fetchNews() {
@@ -29,6 +37,11 @@ export function NewsScreen({ navigation }) {
   // return
   return (
     <View style={style.mainScreenView}>
+      <TextInput
+        onChangeText={onChangeText}
+        placeholder="Search News..."
+        keyboardType="numeric"
+      />
       <FlatList
         data={news}
         renderItem={itemData => {

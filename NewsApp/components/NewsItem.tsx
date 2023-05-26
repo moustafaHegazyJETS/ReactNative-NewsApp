@@ -6,7 +6,9 @@ export function NewsItem({ newsObj }: NewsObject) {
   const navigationHook = useNavigation();
 
   function navigateToDetailsScreen() {
-    navigationHook.push("NewsDetailsScreen");
+    navigationHook.navigate("NewsDetailsScreen", {
+      selectedNewsObject: newsObj
+    });
   }
   return (
     <Pressable onPress={navigateToDetailsScreen}>
