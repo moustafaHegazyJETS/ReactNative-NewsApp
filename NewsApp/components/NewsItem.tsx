@@ -1,12 +1,23 @@
-import { Text, Button, View, StyleSheet, FlatList, Image } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 import { GlobalStyles } from "../utls/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 export function NewsItem({ newsObj }: NewsObject) {
+  const navigationHook = useNavigation();
+
+  function navigateToDetailsScreen() {
+    navigationHook.push("NewsDetailsScreen");
+  }
   return (
-    <View style={styles.mainContainer}>
-      <Text style={styles.textItem}>{newsObj.title}</Text>
-      <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
-    </View>
+    <Pressable onPress={navigateToDetailsScreen}>
+      <View style={styles.mainContainer}>
+        <Text style={styles.textItem}>{newsObj.title}</Text>
+        <Image
+          source={{ uri: newsObj.urlToImage, cache: "only-if-cached" }}
+          style={styles.imageItem}
+        />
+      </View>
+    </Pressable>
   );
 }
 
@@ -26,6 +37,7 @@ const styles = StyleSheet.create({
   imageItem: {
     width: "100%",
     height: 200,
-    borderRadius: 6
+    borderRadius: 6,
+    resizeMode: "stretch"
   }
 });

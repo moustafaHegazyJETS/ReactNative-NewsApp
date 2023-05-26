@@ -3,12 +3,6 @@ import { useEffect } from "react";
 import { getNews } from "../Network/http";
 
 export function NewsDetailsScreen() {
-  useEffect(() => {
-    async function fetchNews() {
-      await getNews();
-    }
-    fetchNews();
-  }, []);
   return (
     <View style={style.mainScreenView}>
       <Text style={style.mainText}>News Screen</Text>

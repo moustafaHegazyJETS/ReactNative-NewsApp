@@ -26,9 +26,6 @@ export function NewsScreen({ navigation }) {
   }, [isLoading, getNews]);
 
   // functions
-  function gotosecond() {
-    navigation.navigate("NewsDetailsScreen");
-  }
   // return
   return (
     <View style={style.mainScreenView}>
