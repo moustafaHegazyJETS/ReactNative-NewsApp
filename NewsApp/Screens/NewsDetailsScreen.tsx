@@ -17,69 +17,78 @@ export function NewsDetailsScreen({ route }) {
     theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
 
   return (
-    <ScrollView
-      style={[
-        styles.mainScreenView,
-        { backgroundColor: themedColors.background }
-      ]}
-    >
-      <Text
+    <View style={styles.mainScreenView}>
+      <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
+
+      <ScrollView
         style={[
-          styles.headerText,
+          styles.scrollView,
           {
-            color: themedColors.textColor
+            backgroundColor: themedColors.background
           }
         ]}
       >
-        {newsObj.title}
-      </Text>
-      <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
-      <View style={styles.authorContainer}>
         <Text
           style={[
-            styles.authorItem,
-            {
-              color: themedColors.textDetailsColor
-            }
-          ]}
-        >
-          Author: {newsObj.author}
-        </Text>
-        <Text
-          style={{
-            color: themedColors.textDetailsColor
-          }}
-        >
-          Release Date: {releaseDate}
-        </Text>
-      </View>
-      <View style={styles.articleLink}>
-        <Text
-          style={[
-            styles.descText,
+            styles.headerText,
             {
               color: themedColors.textColor
             }
           ]}
         >
-          {newsObj.content}
+          {newsObj.title}
         </Text>
+        <View style={styles.authorContainer}>
+          <Text
+            style={[
+              styles.authorItem,
+              {
+                color: themedColors.textDetailsColor
+              }
+            ]}
+          >
+            Author: {newsObj.author}
+          </Text>
+          <Text
+            style={{
+              color: themedColors.textDetailsColor
+            }}
+          >
+            Release Date: {releaseDate}
+          </Text>
+        </View>
+        <View style={styles.articleLink}>
+          <Text
+            style={[
+              styles.descText,
+              {
+                color: themedColors.textColor
+              }
+            ]}
+          >
+            {newsObj.content}
+          </Text>
 
-        <Text
-          style={[styles.linkText, { color: themedColors.textLinkColor }]}
-          onPress={() => Linking.openURL(newsObj.url)}
-        >
-          Click Here To check full Article
-        </Text>
-      </View>
-    </ScrollView>
+          <Text
+            style={[styles.linkText, { color: themedColors.textLinkColor }]}
+            onPress={() => Linking.openURL(newsObj.url)}
+          >
+            Click Here To check full Article
+          </Text>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   mainScreenView: {
-    flex: 1,
-    padding: 10
+    flex: 1
+  },
+  scrollView: {
+    marginTop: -30,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20
   },
   headerText: {
     marginTop: 20,
@@ -91,7 +100,6 @@ const styles = StyleSheet.create({
   imageItem: {
     width: "100%",
     height: 200,
-    borderRadius: 6,
     objectFit: "fill",
     alignSelf: "center"
   },
