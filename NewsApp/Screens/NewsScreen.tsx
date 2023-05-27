@@ -12,10 +12,14 @@ import { NewsContext } from "../store/News-context";
 import { NewsItem } from "../components/NewsItem";
 import { GlobalStyles } from "../utls/Colors";
 import { useTheme } from "@react-navigation/native";
+import { languageContenxt } from "../store/Language-context";
+import { StringsofLanguages } from "../utls/strings";
 
 export function NewsScreen() {
   // constants
   const newsContext = useContext(NewsContext);
+  const languageCtx = useContext(languageContenxt);
+
   const theme = useColorScheme();
   const themedColors =
     theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
@@ -61,7 +65,7 @@ export function NewsScreen() {
           }
         ]}
         onChangeText={onChangeText}
-        placeholder="Search News..."
+        placeholder={languageCtx.language.searchNews}
       />
       {/* update this with refreshing and fetching data screen  */}
       {refreshing ? <ActivityIndicator /> : null}
