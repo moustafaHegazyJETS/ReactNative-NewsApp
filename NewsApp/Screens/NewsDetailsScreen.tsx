@@ -90,11 +90,14 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20
   },
   headerText: {
-    marginTop: 20,
-    marginBottom: 20,
+    margin: 20,
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 19
+    fontSize: 19,
+    borderColor: "white",
+    borderRadius: 6,
+    borderWidth: 3,
+    padding: 20
   },
   imageItem: {
     width: "100%",
@@ -103,8 +106,8 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   authorContainer: {
-    flexDirection: "column",
-    margin: 10,
+    flexDirection: "row",
+    margin: 20,
     justifyContent: "space-between"
   },
   authorItem: {
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
   descText: {
     fontSize: 30,
     fontWeight: "bold",
-    padding: 10
+    padding: 20
   },
   linkText: {
     marginTop: 50,
