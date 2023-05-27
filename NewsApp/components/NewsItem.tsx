@@ -1,19 +1,15 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  Pressable,
-  useColorScheme
-} from "react-native";
-import { GlobalStyles } from "../utls/Colors";
+import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import { ThemingContenxt } from "../store/Theming-context";
 
 export function NewsItem({ newsObj }: NewsObject) {
   const navigationHook = useNavigation();
-  const theme = useColorScheme();
-  const themedColors =
-    theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
+  const themingCtx = useContext(ThemingContenxt);
+
+  // const theme = useColorScheme();
+  // const themedColors =
+  //   theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
 
   function navigateToDetailsScreen() {
     navigationHook.navigate("NewsDetailsScreen", {
@@ -25,14 +21,14 @@ export function NewsItem({ newsObj }: NewsObject) {
       <View
         style={[
           styles.mainContainer,
-          { backgroundColor: themedColors.itemBackground }
+          { backgroundColor: themingCtx.mode.itemBackground }
         ]}
       >
         <Text
           style={[
             styles.textItem,
             {
-              color: themedColors.itemTextcolor
+              color: themingCtx.mode.itemTextcolor
             }
           ]}
         >

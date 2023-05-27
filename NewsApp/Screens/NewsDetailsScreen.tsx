@@ -4,27 +4,26 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  Linking,
-  useColorScheme
+  Linking
 } from "react-native";
-import { GlobalStyles } from "../utls/Colors";
+import { ThemingContenxt } from "../store/Theming-context";
+import { languageContenxt } from "../store/Language-context";
+import { useContext } from "react";
 
 export function NewsDetailsScreen({ route }) {
+  const themingCtx = useContext(ThemingContenxt);
   const newsObj: NewsModel = route.params.selectedNewsObject;
   const releaseDate = newsObj.publishedAt.slice(0, 10);
-  const theme = useColorScheme();
-  const themedColors =
-    theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
+  const languageCtx = useContext(languageContenxt);
 
   return (
     <View style={styles.mainScreenView}>
       <Image source={{ uri: newsObj.urlToImage }} style={styles.imageItem} />
-
       <ScrollView
         style={[
           styles.scrollView,
           {
-            backgroundColor: themedColors.background
+            backgroundColor: themingCtx.mode.background
           }
         ]}
       >
@@ -32,7 +31,7 @@ export function NewsDetailsScreen({ route }) {
           style={[
             styles.headerText,
             {
-              color: themedColors.textColor
+              color: themingCtx.mode.textColor
             }
           ]}
         >
@@ -43,18 +42,18 @@ export function NewsDetailsScreen({ route }) {
             style={[
               styles.authorItem,
               {
-                color: themedColors.textDetailsColor
+                color: themingCtx.mode.textDetailsColor
               }
             ]}
           >
-            Author: {newsObj.author}
+            {languageCtx.language.author}: {newsObj.author}
           </Text>
           <Text
             style={{
-              color: themedColors.textDetailsColor
+              color: themingCtx.mode.textDetailsColor
             }}
           >
-            Release Date: {releaseDate}
+            {languageCtx.language.releaseDate}: {releaseDate}
           </Text>
         </View>
         <View style={styles.articleLink}>
@@ -62,7 +61,7 @@ export function NewsDetailsScreen({ route }) {
             style={[
               styles.descText,
               {
-                color: themedColors.textColor
+                color: themingCtx.mode.textColor
               }
             ]}
           >
@@ -70,7 +69,7 @@ export function NewsDetailsScreen({ route }) {
           </Text>
 
           <Text
-            style={[styles.linkText, { color: themedColors.textLinkColor }]}
+            style={[styles.linkText, { color: themingCtx.mode.textLinkColor }]}
             onPress={() => Linking.openURL(newsObj.url)}
           >
             Click Here To check full Article

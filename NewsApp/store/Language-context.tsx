@@ -10,8 +10,6 @@ export function LangugeContextProvider({ children }) {
   const [lang, setChangedLang] = useState(StringsofLanguages.en);
 
   function setLang(lang: String) {
-    console.log("inside context ****&&&&&&&&&&&&&&***********&&&&&&&");
-    console.log(lang);
     const changedLang =
       lang === "en" ? StringsofLanguages.en : StringsofLanguages.es;
     setChangedLang(changedLang);

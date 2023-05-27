@@ -3,27 +3,20 @@ import {
   StyleSheet,
   FlatList,
   TextInput,
-  ActivityIndicator,
-  useColorScheme
+  ActivityIndicator
 } from "react-native";
 import { useEffect, useContext, useState } from "react";
 import { getNews } from "../Network/http";
 import { NewsContext } from "../store/News-context";
 import { NewsItem } from "../components/NewsItem";
-import { GlobalStyles } from "../utls/Colors";
-import { useTheme } from "@react-navigation/native";
 import { languageContenxt } from "../store/Language-context";
-import { StringsofLanguages } from "../utls/strings";
+import { ThemingContenxt } from "../store/Theming-context";
 
 export function NewsScreen() {
   // constants
   const newsContext = useContext(NewsContext);
   const languageCtx = useContext(languageContenxt);
-
-  const theme = useColorScheme();
-  const themedColors =
-    theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
-
+  const themingCtx = useContext(ThemingContenxt);
   // hooks
   const [refreshing, setRefreshing] = useState(true);
   const [news, addNews] = useState<NewsModel[]>();
@@ -53,21 +46,20 @@ export function NewsScreen() {
     <View
       style={[
         style.mainScreenView,
-        { backgroundColor: themedColors.background }
+        { backgroundColor: themingCtx.mode.background }
       ]}
     >
       <TextInput
         style={[
           style.inputText,
           {
-            borderColor: themedColors.boarder,
-            backgroundColor: themedColors.searchBarBackground
+            borderColor: themingCtx.mode.boarder,
+            backgroundColor: themingCtx.mode.searchBarBackground
           }
         ]}
         onChangeText={onChangeText}
         placeholder={languageCtx.language.searchNews}
       />
-      {/* update this with refreshing and fetching data screen  */}
       {refreshing ? <ActivityIndicator /> : null}
       <FlatList
         data={news}

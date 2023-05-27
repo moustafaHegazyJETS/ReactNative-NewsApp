@@ -11,23 +11,21 @@ import { SettingsScreen } from "./SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { languageContenxt } from "../store/Language-context";
 import { useContext } from "react";
+import { ThemingContenxt } from "../store/Theming-context";
 
 export function AppScreen() {
   const Stack = createNativeStackNavigator();
   const BottomTab = createBottomTabNavigator();
   const languageCtx = useContext(languageContenxt);
-
-  const theme = useColorScheme();
-  const themedColors =
-    theme === "dark" ? GlobalStyles.darkColors : GlobalStyles.lightColors;
+  const themingCtx = useContext(ThemingContenxt);
 
   function MyTabs() {
     return (
       <BottomTab.Navigator
         screenOptions={{
-          tabBarBackground: () => (
-            <View style={{ backgroundColor: themedColors.headerColor }} />
-          )
+          tabBarActiveBackgroundColor: themingCtx.mode.headerColor,
+          tabBarInactiveBackgroundColor: themingCtx.mode.background,
+          tabBarActiveTintColor: themingCtx.mode.headerTintColor
         }}
       >
         <BottomTab.Screen
@@ -46,6 +44,7 @@ export function AppScreen() {
           component={SettingsScreen}
           options={{
             headerShown: false,
+            title: languageCtx.language.settings,
             tabBarLabel: languageCtx.language.settings,
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="settings" color={color} size={size} />
@@ -65,9 +64,9 @@ export function AppScreen() {
               name="MyTabs"
               component={MyTabs}
               options={{
-                title: "Apple News",
+                title: languageCtx.language.news,
                 headerStyle: {
-                  backgroundColor: themedColors.headerColor
+                  backgroundColor: themingCtx.mode.headerColor
                 }
               }}
             />
@@ -75,9 +74,9 @@ export function AppScreen() {
               name="NewsDetailsScreen"
               component={NewsDetailsScreen}
               options={{
-                title: "News Details",
+                title: languageCtx.language.newsDetails,
                 headerStyle: {
-                  backgroundColor: themedColors.headerColor
+                  backgroundColor: themingCtx.mode.headerColor
                 }
               }}
             />
