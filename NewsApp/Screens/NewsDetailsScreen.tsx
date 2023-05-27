@@ -10,7 +10,7 @@ import { ThemingContenxt } from "../store/Theming-context";
 import { languageContenxt } from "../store/Language-context";
 import { useContext } from "react";
 
-export function NewsDetailsScreen({ route }) {
+export function NewsDetailsScreen({ route }: any) {
   const themingCtx = useContext(ThemingContenxt);
   const newsObj: NewsModel = route.params.selectedNewsObject;
   const releaseDate = newsObj.publishedAt.slice(0, 10);
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   linkText: {
+    marginTop: 50,
     fontSize: 22,
     fontWeight: "bold",
     alignSelf: "center"

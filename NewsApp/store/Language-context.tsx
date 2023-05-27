@@ -6,7 +6,7 @@ export const languageContenxt = createContext({
   setLang: (language: String) => {}
 });
 
-export function LangugeContextProvider({ children }) {
+export function LangugeContextProvider({ children }: any) {
   const [lang, setChangedLang] = useState(StringsofLanguages.en);
 
   function setLang(lang: String) {

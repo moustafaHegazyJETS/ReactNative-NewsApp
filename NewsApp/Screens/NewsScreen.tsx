@@ -7,14 +7,13 @@ import {
 } from "react-native";
 import { useEffect, useContext, useState } from "react";
 import { getNews } from "../Network/http";
-import { NewsContext } from "../store/News-context";
+// import { NewsContext } from "../store/News-context";
 import { NewsItem } from "../components/NewsItem";
 import { languageContenxt } from "../store/Language-context";
 import { ThemingContenxt } from "../store/Theming-context";
 
 export function NewsScreen() {
   // constants
-  const newsContext = useContext(NewsContext);
   const languageCtx = useContext(languageContenxt);
   const themingCtx = useContext(ThemingContenxt);
   // hooks
@@ -32,7 +31,6 @@ export function NewsScreen() {
   async function fetchNews() {
     addNews([]);
     const newNews = await getNews();
-    newsContext.setNews(newNews);
     addNews(newNews);
     setRefreshing(false);
   }
@@ -63,7 +61,7 @@ export function NewsScreen() {
       {refreshing ? <ActivityIndicator /> : null}
       <FlatList
         data={news}
-        renderItem={itemData => {
+        renderItem={(itemData: any) => {
           if (inputText === "") {
             return <NewsItem newsObj={itemData.item} />;
           } else if (

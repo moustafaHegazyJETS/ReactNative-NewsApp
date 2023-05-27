@@ -6,7 +6,7 @@ export const ThemingContenxt = createContext({
   setMode: (mode: String) => {}
 });
 
-export function ThemingContextProvider({ children }) {
+export function ThemingContextProvider({ children }: any) {
   const [theme, setChangedTheme] = useState(GlobalStyles.lightColors);
 
   function setTheme(theme: String) {
