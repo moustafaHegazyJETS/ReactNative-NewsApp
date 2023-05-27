@@ -1,11 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { useColorScheme, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NewsScreen } from "./NewsScreen";
 import { NewsDetailsScreen } from "./NewsDetailsScreen";
 import { NewsContextProvider } from "../store/News-context";
-import { GlobalStyles } from "../utls/Colors";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "./SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,39 +17,30 @@ export function AppScreen() {
   const languageCtx = useContext(languageContenxt);
   const themingCtx = useContext(ThemingContenxt);
 
-  function MyTabs() {
+  function NewsNavigation() {
     return (
-      <BottomTab.Navigator
-        screenOptions={{
-          tabBarActiveBackgroundColor: themingCtx.mode.headerColor,
-          tabBarInactiveBackgroundColor: themingCtx.mode.background,
-          tabBarActiveTintColor: themingCtx.mode.headerTintColor
-        }}
-      >
-        <BottomTab.Screen
+      <Stack.Navigator>
+        <Stack.Screen
           name="NewsScreen"
           component={NewsScreen}
           options={{
-            headerShown: false,
-            tabBarLabel: languageCtx.language.home,
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" color={color} size={size} />
-            )
+            title: languageCtx.language.news,
+            headerStyle: {
+              backgroundColor: themingCtx.mode.headerColor
+            }
           }}
         />
-        <BottomTab.Screen
-          name="SettingsScreen"
-          component={SettingsScreen}
+        <Stack.Screen
+          name="NewsDetailsScreen"
+          component={NewsDetailsScreen}
           options={{
-            headerShown: false,
-            title: languageCtx.language.settings,
-            tabBarLabel: languageCtx.language.settings,
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="settings" color={color} size={size} />
-            )
+            title: languageCtx.language.newsDetails,
+            headerStyle: {
+              backgroundColor: themingCtx.mode.headerColor
+            }
           }}
         />
-      </BottomTab.Navigator>
+      </Stack.Navigator>
     );
   }
   return (
@@ -59,28 +48,38 @@ export function AppScreen() {
       <StatusBar style="auto" />
       <NewsContextProvider>
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="MyTabs"
-              component={MyTabs}
+          <BottomTab.Navigator
+            screenOptions={{
+              backgroundColor: themingCtx.mode.headerColor,
+              tabBarActiveBackgroundColor: themingCtx.mode.headerColor,
+              tabBarInactiveBackgroundColor: themingCtx.mode.background,
+              tabBarActiveTintColor: themingCtx.mode.headerTintColor
+            }}
+          >
+            <BottomTab.Screen
+              name="NewsNavigation"
+              component={NewsNavigation}
               options={{
-                title: languageCtx.language.news,
-                headerStyle: {
-                  backgroundColor: themingCtx.mode.headerColor
-                }
+                headerShown: false,
+                tabBarLabel: languageCtx.language.home,
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="home" color={color} size={size} />
+                )
               }}
             />
-            <Stack.Screen
-              name="NewsDetailsScreen"
-              component={NewsDetailsScreen}
+            <BottomTab.Screen
+              name="SettingsScreen"
+              component={SettingsScreen}
               options={{
-                title: languageCtx.language.newsDetails,
-                headerStyle: {
-                  backgroundColor: themingCtx.mode.headerColor
-                }
+                headerShown: false,
+                title: languageCtx.language.settings,
+                tabBarLabel: languageCtx.language.settings,
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="settings" color={color} size={size} />
+                )
               }}
             />
-          </Stack.Navigator>
+          </BottomTab.Navigator>
         </NavigationContainer>
       </NewsContextProvider>
     </>

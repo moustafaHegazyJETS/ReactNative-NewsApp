@@ -14,8 +14,15 @@ export function SettingsScreen() {
   const themingCtx = useContext(ThemingContenxt);
 
   return (
-    <View style={styles.mainScreenView}>
-      <Text style={styles.header}>{languageCtx.language.chooseLanguage}</Text>
+    <View
+      style={[
+        styles.mainScreenView,
+        { backgroundColor: themingCtx.mode.background }
+      ]}
+    >
+      <Text style={[styles.header, { color: themingCtx.mode.textColor }]}>
+        {languageCtx.language.chooseLanguage}
+      </Text>
       <View style={styles.button}>
         <Button
           title={lang[0].longform}
@@ -28,7 +35,9 @@ export function SettingsScreen() {
           onPress={() => languageCtx.setLang(lang[1].shortform)}
         />
       </View>
-      <Text style={styles.header}>{languageCtx.language.changeAppearnce}</Text>
+      <Text style={[styles.header, { color: themingCtx.mode.textColor }]}>
+        {languageCtx.language.changeAppearnce}
+      </Text>
       <View style={styles.appearanceView}>
         <Button
           title={languageCtx.language.darkMode}
@@ -45,7 +54,8 @@ export function SettingsScreen() {
 
 const styles = StyleSheet.create({
   mainScreenView: {
-    flex: 1
+    flex: 1,
+    paddingTop: 50
   },
   header: {
     height: 40,

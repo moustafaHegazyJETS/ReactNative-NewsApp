@@ -10,8 +10,6 @@ export function NewsContextProvider({ children }) {
   const [news, setRecievedNews] = useState<NewsModel[]>([]);
 
   function setNews(news: Array<NewsModel>) {
-    console.log("inside context ****&&&&&&&&&&&&&&***********&&&&&&&");
-    console.log(news);
     setRecievedNews(news);
   }
 
