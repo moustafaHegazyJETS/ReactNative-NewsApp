@@ -3,11 +3,11 @@ import {
   StyleSheet,
   FlatList,
   TextInput,
+  Text,
   ActivityIndicator
 } from "react-native";
 import { useEffect, useContext, useState } from "react";
 import { getNews } from "../Network/http";
-// import { NewsContext } from "../store/News-context";
 import { NewsItem } from "../components/NewsItem";
 import { languageContenxt } from "../store/Language-context";
 import { ThemingContenxt } from "../store/Theming-context";
@@ -47,18 +47,27 @@ export function NewsScreen() {
         { backgroundColor: themingCtx.mode.background }
       ]}
     >
-      <TextInput
-        style={[
-          style.inputText,
-          {
-            borderColor: themingCtx.mode.boarder,
-            backgroundColor: themingCtx.mode.searchBarBackground
-          }
-        ]}
-        onChangeText={onChangeText}
-        placeholder={languageCtx.language.searchNews}
-      />
-      {refreshing ? <ActivityIndicator /> : null}
+      <View style={style.inputView}>
+        <Text style={style.latestNews}>{languageCtx.language.latestNews}</Text>
+        <TextInput
+          style={[
+            style.inputText,
+            {
+              borderColor: themingCtx.mode.boarder,
+              backgroundColor: themingCtx.mode.searchBarBackground
+            }
+          ]}
+          onChangeText={onChangeText}
+          placeholder={languageCtx.language.searchNews}
+        />
+      </View>
+
+      {refreshing ? (
+        <Text style={style.refreshing}>
+          {languageCtx.language.fetchingData}
+        </Text>
+      ) : null}
+
       <FlatList
         data={news}
         renderItem={(itemData: any) => {
@@ -82,11 +91,29 @@ const style = StyleSheet.create({
   mainScreenView: {
     flex: 1
   },
+  inputView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 8,
+    marginRight: 8,
+    marginLeft: 8
+  },
   inputText: {
-    height: 40,
-    padding: 10,
-    margin: 10,
+    height: 30,
+    padding: 5,
+    width: "50%",
     borderRadius: 6,
     borderWidth: 2
+  },
+  latestNews: {
+    height: 30,
+    width: "50%",
+    fontSize: 20,
+    color: "white"
+  },
+  refreshing: {
+    fontSize: 20,
+    color: "white",
+    marginTop: 100
   }
 });

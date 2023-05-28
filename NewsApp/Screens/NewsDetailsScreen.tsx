@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   authorContainer: {
-    flexDirection: "row",
     margin: 20,
     justifyContent: "space-between"
   },

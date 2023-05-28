@@ -9,7 +9,7 @@ export const GlobalStyles = {
     boarder: "#adc178",
     textColor: "#e63946",
     textDetailsColor: "#e9c46a",
-    textLinkColor: "#9381ff"
+    textLinkColor: "#9381ff",
   },
   darkColors: {
     headerColor: "#DCAAA8",

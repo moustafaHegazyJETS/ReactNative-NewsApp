@@ -10,7 +10,10 @@ export const StringsofLanguages = {
     darkMode: "Modo Oscuro",
     lightMode: "Modo de Luz",
     news: "noticias",
-    newsDetails: "noticias Detalles"
+    newsDetails: "noticias Detalles",
+    fullLink: "Haga clic aquí para ver el artículo completo",
+    latestNews: "últimas noticias",
+    fetchingData: "recuperacion de datos"
   },
   en: {
     chooseLanguage: "Choose Language",
@@ -23,6 +26,9 @@ export const StringsofLanguages = {
     darkMode: "Dark Mode",
     lightMode: "Light Mode",
     news: "News",
-    newsDetails: "News Details"
+    newsDetails: "News Details",
+    fullLink: "Click Here To check full Article",
+    latestNews: "Latest News",
+    fetchingData: "fetching data"
   }
 };
